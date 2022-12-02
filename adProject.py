@@ -65,40 +65,40 @@ class Graph(QMainWindow):
         self.show()
 
 
-def update_graph(self):  # 그래프 변화 함수
+    def update_graph(self):  # 그래프 변화 함수
 
-    self.count_pms = []  # 미세먼지 정보에 대한 시간을 담기 위한 리스트
-    self.pm10 = []  # pm10의 값을 담기 위한 리스트
-    self.pm25 = []  # pm25의 값을 담기 위한 리스트
-    self.pm1 = []  # pm1의 값을 담기 위한 리스트
-    self.count_bme = []  # 온습도 정보에 대한 시간을 담기 위한 리스트
-    self.temp = []  # temp의 값을 담기 위한 리스트
-    self.humidity = []  # humidity의 값을 담기 위한 리스트
+        self.count_pms = []  # 미세먼지 정보에 대한 시간을 담기 위한 리스트
+        self.pm10 = []  # pm10의 값을 담기 위한 리스트
+        self.pm25 = []  # pm25의 값을 담기 위한 리스트
+        self.pm1 = []  # pm1의 값을 담기 위한 리스트
+        self.count_bme = []  # 온습도 정보에 대한 시간을 담기 위한 리스트
+        self.temp = []  # temp의 값을 담기 위한 리스트
+        self.humidity = []  # humidity의 값을 담기 위한 리스트
 
-    for d, cnt in zip(db['pms'].find().sort('date', -1), range(100, 0, -1)):  # mongodb에 맞춰서 수정
-        self.count_pms.append(d['date'])  # 시간을 count에 저장
-        self.pm1.append(int(d['pm1']))  # pm1의 값을 저장
-        self.pm25.append(int(d['pm25']))  # pm25의 값을 저장
-        self.pm10.append(int(d['pm10']))  # pm10의 값을 저장
+        for d, cnt in zip(db['pms'].find().sort('date', -1), range(100, 0, -1)):  # mongodb에 맞춰서 수정
+            self.count_pms.append(d['date'])  # 시간을 count에 저장
+            self.pm1.append(int(d['pm1']))  # pm1의 값을 저장
+            self.pm25.append(int(d['pm25']))  # pm25의 값을 저장
+            self.pm10.append(int(d['pm10']))  # pm10의 값을 저장
 
-    for d, cnt in zip(db['bme'].find().sort('date', -1), range(100, 0, -1)):  # mongodb에 맞춰서 수정
-        self.count_bme.append(d['date'])  # 시간을 count에 저장
-        self.temp.append(int(d['temp']))  # temp의 값을 저장
-        self.humidity.append(int(d['humi']))  # humidity의 값을 저장
+        for d, cnt in zip(db['bme'].find().sort('date', -1), range(100, 0, -1)):  # mongodb에 맞춰서 수정
+            self.count_bme.append(d['date'])  # 시간을 count에 저장
+            self.temp.append(int(d['temp']))  # temp의 값을 저장
+            self.humidity.append(int(d['humi']))  # humidity의 값을 저장
 
-    status1 = f"현재 미세먼지 농도는 {self.pm10[0]}입니다."
-    status2 = f"온도: {self.temp[0]}"
-    status3 = f"습도: {self.humidity[0]}"
+        status1 = f"현재 미세먼지 농도는 {self.pm10[0]}입니다."
+        status2 = f"온도: {self.temp[0]}"
+        status3 = f"습도: {self.humidity[0]}"
 
-    self.tempStatus.setText(status2)
-    self.humStatus.setText(status3)
-    self.airStatus.setText(status1)
+        self.tempStatus.setText(status2)
+        self.humStatus.setText(status3)
+        self.airStatus.setText(status1)
 
-    self.graph_ax.clear()  # 그래프 초기화
-    self.graph_ax.plot(self.count_pms, self.pm25, color='pink')  # 점 찍기
-    self.graph_ax.plot(self.count_pms, self.pm1, color='red')  # 점 찍기
-    self.graph_ax.plot(self.count_pms, self.pm10, color='blue')  # 점 찍기
-    self.graph_ax.figure.canvas.draw()  # 그리기
+        self.graph_ax.clear()  # 그래프 초기화
+        self.graph_ax.plot(self.count_pms, self.pm25, color='pink')  # 점 찍기
+        self.graph_ax.plot(self.count_pms, self.pm1, color='red')  # 점 찍기
+        self.graph_ax.plot(self.count_pms, self.pm10, color='blue')  # 점 찍기
+        self.graph_ax.figure.canvas.draw()  # 그리기
 
 
 if __name__ == '__main__':
